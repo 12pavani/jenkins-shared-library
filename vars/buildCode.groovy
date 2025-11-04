@@ -8,7 +8,9 @@ def call() {
     git branch: 'master', url: 'https://github.com/jenkins-docs/simple-java-maven-app.git'
 
     echo "Building the project using Maven..."
-    sh "mvn -B -DskipTests clean package"
+    withMaven(maven: 'Maven 3.9.9') {
+        sh "mvn -B -DskipTests clean package"
+    }
 
     echo "Build completed successfully!"
 }
