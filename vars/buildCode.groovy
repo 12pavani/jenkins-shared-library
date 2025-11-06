@@ -1,4 +1,6 @@
 def call() {
-    def helper = new org.pavani.BuildHelper(this)
-    helper.buildProject()
+    return [
+        buildHelper: { -> new org.pavani.BuildHelper(this) },
+        repoHelper : { -> new org.pavani.RepoHelper(this) }
+    ]
 }
