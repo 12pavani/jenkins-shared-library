@@ -1,34 +1,36 @@
-package org.pavani
+// package org.pavani
 
-class SearchPomHelper implements Serializable {
-    def steps
+// class SearchPomHelper implements Serializable {
+//     def steps
 
-    SearchPomHelper(steps) {
-        this.steps = steps
-    }
+//     SearchPomHelper(steps) {
+//         this.steps = steps
+//     }
 
-    def cleanWorkspace() {
-        steps.echo "Cleaning workspace..."
-        steps.sh 'rm -rf *'
-    }
+//     def cleanWorkspace() {
+//         steps.echo "Cleaning workspace..."
+//         steps.sh 'rm -rf *'
+//     }
 
-    def cloneRepo() {
-        steps.echo "Cloning the repository..."
-        steps.git branch: 'master', url: 'https://github.com/sharmar0790/spring-boot-multi-module-maven.git'
-    }
+//     def cloneRepo() {
+//         steps.echo "Cloning the repository..."
+//         steps.git branch: 'master', url: 'https://github.com/sharmar0790/spring-boot-multi-module-maven.git'
+//     }
 
-    def checkPomXml() {
-        def pomFile = sh(script: "find . -name 'pom.xml'", returnStdout: true).trim()
+//     def checkPomXml() {
+//         def pomFile = sh(script: "find . -name 'pom.xml'", returnStdout: true).trim()
 
-        if (pomFile) {
-            steps.echo "Pom.xml found at: ${pomFile}"
-            steps.echo "Starting Maven build..."
+//         if (pomFile) {
+//             steps.echo "Pom.xml found at: ${pomFile}"
+//             steps.echo "Starting Maven build..."
 
-            steps.withMaven(maven: 'Maven 3.9.9') {
-                steps.sh "mvn -B -DskipTests clean package"
-            }
-        } else {
-            steps.echo "No pom.xml file found in any subdirectory."
-        }
-    }
-}
+//             steps.withMaven(maven: 'Maven 3.9.9') {
+//                 steps.sh "mvn -B -DskipTests clean package"
+//             }
+//         } else {
+//             steps.echo "No pom.xml file found in any subdirectory."
+//         }
+//     }
+// }
+
+echo "Im in SearchPomHelper"
