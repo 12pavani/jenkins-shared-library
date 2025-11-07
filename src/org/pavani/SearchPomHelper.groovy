@@ -9,7 +9,7 @@ class SearchPomHelper implements Serializable {
 
     def cleanWorkspace() {
         steps.echo "Cleaning workspace..."
-        steps.sh 'rm -rf'
+        steps.sh 'rm -rf *'
     }
 
     def cloneRepo() {
@@ -21,14 +21,14 @@ class SearchPomHelper implements Serializable {
         def pomFile = sh(script: "find . -name 'pom.xml'", returnStdout: true).trim()
 
         if (pomFile) {
-            echo "Pom.xml found at: ${pomFile}"
-            echo "Starting Maven build..."
+            steps.echo "Pom.xml found at: ${pomFile}"
+            steps.echo "Starting Maven build..."
 
-            withMaven(maven: 'Maven 3.9.9') {
-                sh "mvn -B -DskipTests clean package"
+            steps.withMaven(maven: 'Maven 3.9.9') {
+                steps.sh "mvn -B -DskipTests clean package"
             }
         } else {
-            echo "No pom.xml file found in any subdirectory."
+            steps.echo "No pom.xml file found in any subdirectory."
         }
     }
 }
