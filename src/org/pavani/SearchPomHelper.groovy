@@ -4,24 +4,28 @@ void test(String repoName, String repoUrl, String branch = 'main') {
     node {
         echo "Starting build process for ${repoName}..."
 
-        echo "Cleaning workspace..."
         sh "rm -rf *"
 
-        echo "Cloning the repository..."
         sh "git clone -b ${branch} ${repoUrl} ${repoName}"
 
-        echo "Searching for pom.xml file..."
-        def pomFile = sh(script: "find . -name 'pom.xml' | head -n 1", returnStdout: true).trim()
+        def pomFiles = sh(
+            script: "find ${repoName} -type f -name 'pom.xml'",
+            returnStdout: true
+        ).trim().split('\n')
 
-        if (pomFile) {
-            echo "pom.xml found at: ${pomFile}"
-            echo "Starting Maven build..."
+        if (pomFiles && pomFiles[0].trim() != "") {
+            echo "Found ${pomFiles.size()} pom.xml file(s). Starting build..."
+
             withMaven(maven: 'Maven 3.9.9') {
-                sh "mvn -f ${pomFile} -B -DskipTests clean package"
+                for (pom in pomFiles) {
+                    echo "Building: ${pom}"
+                    sh "mvn -f '${pom}' -B -DskipTests clean package"
+                }
             }
-            echo "Build for ${repoName} completed successfully!"
+
+            echo "All Maven builds completed successfully!"
         } else {
-            echo "No pom.xml file found in ${repoName}."
+            echo "No pom.xml files found in the repository."
         }
     }
 }
