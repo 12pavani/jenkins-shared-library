@@ -1,25 +1,20 @@
-// package org.pavani
+package com.example
 
-// class BuildHelper implements Serializable {
-//     def steps
+void BuildHelper(String repoName, String repoUrl, String branch = 'main') {
+    node {
+        echo "Starting build process for ${repoName}..."
+        
+        echo "Cleaning workspace..."
+        sh "rm -rf *"
+        
+        echo "Cloning the repository..."
+        git branch: branch, url: repoUrl
+        
+        echo "Building the project using Maven..."
+        withMaven(maven: 'Maven 3.9.9') {
+            sh "mvn -B -DskipTests clean package"
+        }
 
-//     BuildHelper(steps) {
-//         this.steps = steps
-//     }
-
-//     def buildProject() {
-//         steps.echo "Starting build process..."
-//         steps.echo "Cleaning workspace..."
-//         steps.sh "rm -rf *"
-
-//         steps.echo "Cloning the repository..."
-//         steps.git branch: 'master', url: 'https://github.com/jenkins-docs/simple-java-maven-app.git'
-
-//         steps.echo "Building the project using Maven..."
-//         steps.withMaven(maven: 'Maven 3.9.9') {
-//             steps.sh "mvn -B -DskipTests clean package"
-//         }
-
-//         steps.echo "Build completed successfully!"
-//     }
-// }
+        echo "Build for ${repoName} completed successfully!"
+    }
+}

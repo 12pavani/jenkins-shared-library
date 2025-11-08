@@ -33,4 +33,3 @@
 //     }
 // }
 
-echo "Im in SearchPomHelper"
