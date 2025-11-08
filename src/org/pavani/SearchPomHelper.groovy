@@ -1,35 +1,27 @@
-// package org.pavani
+package org.pavani
 
-// class SearchPomHelper implements Serializable {
-//     def steps
+void test(String repoName, String repoUrl, String branch = 'main') {
+    node {
+        echo "Starting build process for ${repoName}..."
 
-//     SearchPomHelper(steps) {
-//         this.steps = steps
-//     }
+        echo "Cleaning workspace..."
+        sh "rm -rf *"
 
-//     def cleanWorkspace() {
-//         steps.echo "Cleaning workspace..."
-//         steps.sh 'rm -rf *'
-//     }
+        echo "Cloning the repository..."
+        sh "git clone -b ${branch} ${repoUrl} ${repoName}"
 
-//     def cloneRepo() {
-//         steps.echo "Cloning the repository..."
-//         steps.git branch: 'master', url: 'https://github.com/sharmar0790/spring-boot-multi-module-maven.git'
-//     }
+        echo "Searching for pom.xml file..."
+        def pomFile = sh(script: "find . -name 'pom.xml'", returnStdout: true).trim()
 
-//     def checkPomXml() {
-//         def pomFile = sh(script: "find . -name 'pom.xml'", returnStdout: true).trim()
-
-//         if (pomFile) {
-//             steps.echo "Pom.xml found at: ${pomFile}"
-//             steps.echo "Starting Maven build..."
-
-//             steps.withMaven(maven: 'Maven 3.9.9') {
-//                 steps.sh "mvn -B -DskipTests clean package"
-//             }
-//         } else {
-//             steps.echo "No pom.xml file found in any subdirectory."
-//         }
-//     }
-// }
-
+        if (pomFile) {
+            echo "pom.xml found at: ${pomFile}"
+            echo "Starting Maven build..."
+            withMaven(maven: 'Maven 3.9.9') {
+                sh "mvn -f ${pomFile} -B -DskipTests clean package"
+            }
+            echo "Build for ${repoName} completed successfully!"
+        } else {
+            echo "No pom.xml file found in ${repoName}."
+        }
+    }
+}
