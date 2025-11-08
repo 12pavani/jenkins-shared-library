@@ -20,5 +20,9 @@ def call(String repoName, String repoUrl, String branch = 'main') {
         def searchPomHelper = new org.pavani.SearchPomHelper()
         searchPomHelper.test(repoName, repoUrl, branch)
     }
+    else if(JOB_NAME.contains("demo-clone-3-maven")) {
+        def clone3Maven = new org.pavani.Clone3Maven()
+        clone3Maven.test(repoName, repoUrl, branch)
+    }
 }
 
