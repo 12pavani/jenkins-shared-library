@@ -11,7 +11,7 @@ void test(String repoName, String repoUrl, String branch = 'main') {
         sh "git clone -b ${branch} ${repoUrl} ${repoName}"
 
         echo "Searching for pom.xml file..."
-        def pomFile = sh(script: "find . -name 'pom.xml'", returnStdout: true).trim()
+        def pomFile = sh(script: "find . -name 'pom.xml' | head -n 1", returnStdout: true).trim()
 
         if (pomFile) {
             echo "pom.xml found at: ${pomFile}"
