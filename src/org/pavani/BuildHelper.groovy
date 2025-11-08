@@ -1,6 +1,6 @@
 package org.pavani
 
-void BuildHelper(String repoName, String repoUrl, String branch = 'main') {
+void test(String repoName, String repoUrl, String branch = 'main') {
     node {
         echo "Starting build process for ${repoName}..."
         
