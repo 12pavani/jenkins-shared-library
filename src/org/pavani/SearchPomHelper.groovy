@@ -1,31 +1,32 @@
 package org.pavani
 
-void test(String repoName, String repoUrl, String branch = 'main') {
+void test1(String repoName, String repoUrl, String branch = 'main') {
+    echo "11"
+
     node {
-        echo "Starting build process for ${repoName}..."
+        echo "22"
+        def mvnHome = tool name: 'maven', type: 'maven'
 
-        sh "rm -rf *"
+        stage('Clone & Build') {
+            echo "33"
 
-        sh "git clone -b ${branch} ${repoUrl} ${repoName}"
+            sh "rm -rf repo"
+            sh "mkdir repo"
 
-        def pomFiles = sh(
-            script: "find ${repoName} -type f -name 'pom.xml'",
-            returnStdout: true
-        ).trim().split('\n')
+            dir('repo') {
+                echo "44"
+                git branch: branch, url: repoUrl
 
-        if (pomFiles && pomFiles[0].trim() != "") {
-            echo "Found ${pomFiles.size()} pom.xml file(s). Starting build..."
+                def pomExists = sh(script: "find . -name 'pom.xml' | wc -l", returnStdout: true).trim()
 
-            withMaven(maven: 'Maven 3.9.9') {
-                for (pom in pomFiles) {
-                    echo "Building: ${pom}"
-                    sh "mvn -f '${pom}' -B -DskipTests clean package"
+                if (pomExists.toInteger() > 0) {
+                    echo "Found ${pomExists} pom.xml file(s). Starting Maven build..."
+                    sh "${mvnHome}/bin/mvn -B -DskipTests clean install"
+                } else {
+                    echo "No pom.xml file found"
                 }
             }
-
-            echo "All Maven builds completed successfully!"
-        } else {
-            echo "No pom.xml files found in the repository."
         }
     }
 }
+
