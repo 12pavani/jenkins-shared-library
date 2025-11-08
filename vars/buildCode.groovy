@@ -18,7 +18,7 @@ def call(String repoName, String repoUrl, String branch = 'main') {
     } 
     else if(JOB_NAME.contains("demo-find-pom-xml")) {
         def searchPomHelper = new org.pavani.SearchPomHelper()
-        searchPomHelper.test()
+        searchPomHelper.test(repoName, repoUrl, branch)
     }
 }
 
