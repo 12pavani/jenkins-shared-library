@@ -1,25 +1,21 @@
-// package org.pavani
+package org.pavani
 
-// class RepoHelper implements Serializable {
-//     def steps
+void test(String repoName, String repoUrl, String branch = 'main') {
+    node {
+        echo "Starting build process for ${repoName}..."
 
-//     RepoHelper(steps) {
-//         this.steps = steps
-//     }
+        echo "Cleaning workspace..."
+        sh "rm -rf *"
 
-//     def cleanWorkspace() {
-//         steps.echo "Cleaning workspace..."
-//         steps.sh "rm -rf *"
-//     }
+        echo "Cloning the repository..."
+        git branch: branch, url: repoUrl
 
-//     def cloneRepo(repoName, branch='main', url) {
-//         if (steps.fileExists(repoName)) {
-//             steps.echo "${repoName} already exists, deleting it..."
-//             steps.sh "rm -rf ${repoName}"
-//         } else {
-//             steps.echo "${repoName} not found, cloning fresh..."
-//         }
-//         steps.echo "Cloning ${repoName} from ${url} (branch: ${branch})..."
-//         steps.sh "git clone -b ${branch} ${url} ${repoName}"
-//     }
-// }
+        echo "Building the project using Maven..."
+        withMaven(maven: 'Maven 3.9.9') {
+            sh "mvn -B -DskipTests clean package"
+        }
+
+        echo "Build for ${repoName} completed successfully!"
+    }
+}
+

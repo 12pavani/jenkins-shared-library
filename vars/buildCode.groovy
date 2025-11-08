@@ -12,10 +12,11 @@ def call(String repoName, String repoUrl, String branch = 'main') {
         def buildHelper = new org.pavani.BuildHelper()
         buildHelper.test(repoName, repoUrl, branch)
     }
-    // else if(JOB_NAME.contains("demo-clone-two-repo")) {
-    //     def repoHelper = new org.pavani.RepoHelper(this)
-    //     repoHelper.cleanWorkspace()
-    // } else (JOB_NAME.contains("demo-find-pom-xml")) {
+    else if(JOB_NAME.contains("demo-clone-two-repo")) {
+        def repoHelper = new org.pavani.RepoHelper()
+        repoHelper.test(repoName, repoUrl, branch)
+    } 
+    // else (JOB_NAME.contains("demo-find-pom-xml")) {
     //     def searchPomHelper = new org.pavani.SearchPomHelper(this)
     //     searchPomHelper.cleanWorkspace()
     //     searchPomHelper.cloneRepo()
