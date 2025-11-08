@@ -9,7 +9,7 @@
 def call(String repoName, String repoUrl, String branch = 'main') {
 
     if(JOB_NAME.contains("demo-global-shared-lib")) {
-        def buildHelper = new org.pavani.BuildHelper(this)
+        def buildHelper = new org.pavani.BuildHelper()
         buildHelper.test(repoName, repoUrl, branch)
     }
     // else if(JOB_NAME.contains("demo-clone-two-repo")) {
