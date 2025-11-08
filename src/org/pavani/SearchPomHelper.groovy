@@ -1,20 +1,15 @@
 package org.pavani
 
 void test(String repoName, String repoUrl, String branch = 'main') {
-    echo "11"
-
     node {
-        echo "22"
         def mvnHome = tool name: 'Maven 3.9.9', type: 'maven'
 
         stage('Clone & Build') {
-            echo "33"
 
-            sh "rm -rf repo"
-            sh "mkdir repo"
+            sh "rm -rf *"
+            sh "mkdir ${repoName}"
 
-            dir('repo') {
-                echo "44"
+            dir('${repoName}') {
                 git branch: branch, url: repoUrl
 
                 def pomExists = sh(script: "find . -name 'pom.xml' | wc -l", returnStdout: true).trim()
