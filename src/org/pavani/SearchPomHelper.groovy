@@ -5,7 +5,7 @@ void test(String repoName, String repoUrl, String branch = 'main') {
 
     node {
         echo "22"
-        def mvnHome = tool name: 'maven', type: 'maven'
+        def mvnHome = tool name: 'Maven 3.9.9', type: 'maven'
 
         stage('Clone & Build') {
             echo "33"
