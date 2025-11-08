@@ -1,6 +1,6 @@
 package org.pavani
 
-void test1(String repoName, String repoUrl, String branch = 'main') {
+void test(String repoName, String repoUrl, String branch = 'main') {
     echo "11"
 
     node {
