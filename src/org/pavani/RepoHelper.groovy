@@ -12,7 +12,7 @@ void test(String repoName, String repoUrl, String branch = 'main') {
 
         echo "Building the project using Maven..."
         withMaven(maven: 'Maven 3.9.9') {
-            sh "mvn -f ${repoName}/pom.xml -B -DskipTests clean package"
+            sh "mvn demo-clone-two-repo/pom.xml -B -DskipTests clean package"
         }
 
         echo "Build for ${repoName} completed successfully!"
