@@ -5,7 +5,7 @@ package org.pavani
 void test(String repoName, String repoUrl, String branch = 'main') {
     node {
     echo "Cleaning workspace..."
-    deleteDir()
+    sh "rm -rf Mavenrepo-1 Mavenrepo-2 Mavenrepo-3"
 
     stage("Building Mavenrepo-1") {
         echo "Cloning https://github.com/12pavani/Leave_Management_Backend.git ..."
@@ -56,6 +56,7 @@ void test(String repoName, String repoUrl, String branch = 'main') {
     }
 
     echo "All builds completed. Cleaning workspace..."
-    deleteDir()
+    sh "rm -rf Mavenrepo-1 Mavenrepo-2 Mavenrepo-3"
 }
+
 }
