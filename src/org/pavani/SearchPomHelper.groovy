@@ -4,26 +4,26 @@ package org.pavani
 
 void test() {
     node {
-        def mvnHome = tool name: 'Maven 3.9.9', type: 'maven'
+    def mvnHome = tool name: 'Maven 3.9.9', type: 'maven'
 
-        stage('Clone & Build') {
+    echo "Cleaning workspace..."
+    sh "rm -rf repo-1"
 
-            sh "rm -rf *"
-            sh "mkdir ${repoName}"
+    echo "Cloning repository..."
+    sh "git clone -b master https://github.com/sharmar0790/spring-boot-multi-module-maven.git repo-1"
 
-            dir('${repoName}') {
-                git branch: branch, url: repoUrl
+    echo "Checking for pom.xml files..."
+    def pomExists = sh(script: "find repo-1 -name 'pom.xml' | wc -l", returnStdout: true).trim()
 
-                def pomExists = sh(script: "find . -name 'pom.xml' | wc -l", returnStdout: true).trim()
-
-                if (pomExists.toInteger() > 0) {
-                    echo "Found ${pomExists} pom.xml file(s). Starting Maven build..."
-                    sh "${mvnHome}/bin/mvn -B -DskipTests clean install"
-                } else {
-                    echo "No pom.xml file found"
-                }
-            }
-        }
+    if (pomExists.toInteger() > 0) {
+        echo "Found ${pomExists} pom.xml file(s). Starting Maven build..."
+        sh "${mvnHome}/bin/mvn -f repo-1/pom.xml -B -DskipTests clean install"
+    } else {
+        echo "No pom.xml file found in repo-1"
     }
+
+    echo "Build completed. Cleaning workspace..."
+    sh "rm -rf repo-1"
+}
 }
 
