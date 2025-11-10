@@ -28,5 +28,9 @@ def call(String repoName, String repoUrl, String branch = 'main') {
         def findDir = new org.pavani.FindDir()
         findDir.test(repoName, repoUrl, branch)
     }
+    else if(JOB_NAME.contains("demo-webhook-github")) {
+        def webhookHelper = new org.pavani.WebhookHelper()
+        webhookHelper.test(repoName, repoUrl, branch)
+    }
 }
 

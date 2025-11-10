@@ -1,3 +1,5 @@
+// Write a Jenkins pipeline that checks whether a pom.xml file exists in any subdirectory, not just one level deep. If the pom.xml file is found, generate the build; if it is not found, print "No pom.xml file found."
+
 package org.pavani
 
 void test(String repoName, String repoUrl, String branch = 'main') {
