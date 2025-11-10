@@ -2,7 +2,7 @@
 
 package org.pavani
 
-void test(String repoName, String repoUrl, String branch = 'main') {
+void test() {
     node {
     echo "Cleaning workspace..."
     sh "rm -rf Mavenrepo-1 Mavenrepo-2 Mavenrepo-3"

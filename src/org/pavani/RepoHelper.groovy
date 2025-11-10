@@ -2,7 +2,7 @@
 
 package org.pavani
 
-void test(String repoName, String repoUrl, String branch = 'main') {
+void test() {
     node {
     echo "Starting build process for GitDemo-1..."
 

@@ -2,7 +2,7 @@
 
 package org.pavani
 
-void test(String repoName, String repoUrl, String branch = 'main') {
+void test() {
     node {
         stage('Check and Create Folders') {
             echo "Checking folder structure..."
