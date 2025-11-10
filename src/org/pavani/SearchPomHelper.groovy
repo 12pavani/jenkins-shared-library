@@ -2,7 +2,7 @@
 
 package org.pavani
 
-void test(String repoName, String repoUrl, String branch = 'main') {
+void test() {
     node {
         def mvnHome = tool name: 'Maven 3.9.9', type: 'maven'
 
